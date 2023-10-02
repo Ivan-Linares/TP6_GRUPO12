@@ -15,13 +15,12 @@ public class PersonaDaoImpl implements IPersona
 	private static final String eliminar = "DELETE FROM personas WHERE dni = ?";
 	private static final String listar = "SELECT * FROM personas";
 	
-	Connection conexion = Conexion.getConexion().getSQLConexion();
 	
 	@Override
 	public boolean Insertar(Persona nuevaPersona) 
 	{
 		PreparedStatement statement;
-		
+		Connection conexion = Conexion.getConexion().getSQLConexion();	
 		boolean EstadoInsert = false;
 		
 		try
@@ -61,14 +60,54 @@ public class PersonaDaoImpl implements IPersona
 
 	@Override
 	public boolean Eliminar(Persona eliminarPersona) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		PreparedStatement statement;
+		Connection con = Conexion.getConexion().getSQLConexion();
+		boolean eliminado = false;
+		
+		try {
+			statement = con.prepareStatement(eliminar);
+			statement.setString(1, nuevaPersona.getApellido());
+			if(statement.executeUpdate() > 0) {
+				con.commit();
+				eliminado = true;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return eliminado;
+		
 	}
 
 	@Override
-	public List<Persona> Listar() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Persona> Listar() {
+		
+		ArrayList<Persona> personas = new ArrayList<Persona>();
+		Connection con = Conexion.getConexion().getSQLConexion();
+		
+		try {
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(listar);
+			while(rs.next()) {
+				Persona persona = new Persona();
+				persona.setDni(rs.getString("dni"));
+				persona.setNombre(rs.getString("nombre"));
+				persona.setApellido(rs.getString("apellido"));
+				personas.add(persona);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return personas;
+		
 	}
 
 }
