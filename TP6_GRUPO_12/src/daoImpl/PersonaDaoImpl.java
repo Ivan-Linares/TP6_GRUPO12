@@ -1,9 +1,11 @@
 package daoImpl;
 
+import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.ArrayList;
 
 import dao.IPersona;
 import entidad.Persona;
@@ -67,7 +69,7 @@ public class PersonaDaoImpl implements IPersona
 		
 		try {
 			statement = con.prepareStatement(eliminar);
-			statement.setString(1, nuevaPersona.getApellido());
+			statement.setString(1, eliminarPersona.getApellido());
 			if(statement.executeUpdate() > 0) {
 				con.commit();
 				eliminado = true;
@@ -93,11 +95,11 @@ public class PersonaDaoImpl implements IPersona
 		Connection con = Conexion.getConexion().getSQLConexion();
 		
 		try {
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery(listar);
+			Statement st = (Statement) con.createStatement();
+			ResultSet rs = ((java.sql.Statement) st).executeQuery(listar);
 			while(rs.next()) {
 				Persona persona = new Persona();
-				persona.setDni(rs.getString("dni"));
+				persona.setDNI(rs.getString("dni"));
 				persona.setNombre(rs.getString("nombre"));
 				persona.setApellido(rs.getString("apellido"));
 				personas.add(persona);
