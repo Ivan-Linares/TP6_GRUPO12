@@ -1,7 +1,6 @@
 package dao;
 
 import java.util.ArrayList;
-
 import entidad.Persona;
 
 public interface IPersona 
