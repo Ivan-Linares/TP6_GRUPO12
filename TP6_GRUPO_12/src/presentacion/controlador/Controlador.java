@@ -21,7 +21,7 @@ public class Controlador {
 	private ArrayList<Persona> lista;
 	
 	
-	public Controlador(VentanaPrincipal ventap, PersonaNegocioImpl pnegocio) {
+	public Controlador(VentanaPrincipal ventap, PersonaNegocioImpl pnegocio ) {
 		super();
 		this.ventaprincipal = ventap;
 		this.Pnegocio = pnegocio;
@@ -35,6 +35,7 @@ public class Controlador {
 		//PANEL AGREGAR
 		this.panelAgregar.getBtnaceptar().addActionListener(a->EventoClick_AgregarPersona(a));
 	}
+
 	
 	
 	private void EventoClick_AgregarPersona(ActionEvent a) {

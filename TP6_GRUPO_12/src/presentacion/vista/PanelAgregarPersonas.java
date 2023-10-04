@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class PanelAgregarPersonas extends JPanel {
 	
@@ -36,16 +38,40 @@ public class PanelAgregarPersonas extends JPanel {
 		add(btnaceptar);
 		
 		txtnombre = new JTextField();
+		txtnombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(!Character.isDigit(e.getKeyChar())) {
+					e.consume();
+				}
+			}
+		});
 		txtnombre.setBounds(158, 38, 131, 23);
 		add(txtnombre);
 		txtnombre.setColumns(10);
 		
 		txtapellido = new JTextField();
+		txtapellido.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(Character.isDigit(e.getKeyChar())) {
+					e.consume();
+				}
+			}
+		});
 		txtapellido.setColumns(10);
 		txtapellido.setBounds(158, 73, 131, 23);
 		add(txtapellido);
 		
 		txtdni = new JTextField();
+		txtdni.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(!Character.isDigit(e.getKeyChar())) {
+					e.consume();
+				}
+			}
+		});
 		txtdni.setColumns(10);
 		txtdni.setBounds(158, 117, 131, 23);
 		add(txtdni);
@@ -86,6 +112,4 @@ public class PanelAgregarPersonas extends JPanel {
 	public void setTxtdni(JTextField txtdni) {
 		this.txtdni = txtdni;
 	}
-	
-	
 }
