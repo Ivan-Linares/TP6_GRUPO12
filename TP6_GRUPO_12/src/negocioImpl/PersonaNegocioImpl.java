@@ -10,6 +10,11 @@ public class PersonaNegocioImpl implements PersonaNegocio {
 	
 	IPersona personaDao = new PersonaDaoImpl();
 
+	public boolean PersonaRegistrada(int id) {
+		boolean registrada= false;
+		registrada = personaDao.PersonaRegistrada(id);
+		return registrada;
+	}
 	@Override
 	public boolean insertar(Persona persona) {
 		boolean estado = false;
@@ -31,8 +36,9 @@ public class PersonaNegocioImpl implements PersonaNegocio {
 
 	@Override
 	public boolean modificar(Persona persona) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean estado= false;
+		estado = personaDao.Modificar(persona);
+		return estado;
 	}
 
 }

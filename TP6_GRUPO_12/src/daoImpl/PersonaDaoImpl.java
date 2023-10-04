@@ -16,6 +16,7 @@ public class PersonaDaoImpl implements IPersona
 	private static final String modificar = "UPDATE personas SET Nombre=?,Apellido=? WHERE Dni=?";
 	private static final String eliminar = "DELETE FROM personas WHERE dni = ?";
 	private static final String listar = "SELECT * FROM personas";
+	private static final String PersonaRegistrada = "SELECT * FROM personas where DNI=?";
 	
 	
 	@Override
@@ -56,8 +57,23 @@ public class PersonaDaoImpl implements IPersona
 
 	@Override
 	public boolean Modificar(Persona modificarPersona) {
-		// TODO Auto-generated method stub
-		return false;
+		PreparedStatement st;
+		Connection conexion = Conexion.getConexion().getSQLConexion();	
+		boolean Modificado = false;
+		try {
+			st = conexion.prepareStatement(modificar);
+			st.setString(1, modificarPersona.getNombre());
+			st.setString(2, modificarPersona.getApellido());
+			st.setString(3, modificarPersona.getDNI());
+			if(st.executeUpdate() > 0) {
+				conexion.commit();
+				Modificado = true;
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Modificado;
 	}
 
 	@Override
@@ -69,7 +85,7 @@ public class PersonaDaoImpl implements IPersona
 		
 		try {
 			statement = con.prepareStatement(eliminar);
-			statement.setString(1, eliminarPersona.getApellido());
+			statement.setString(1, eliminarPersona.getDNI());
 			if(statement.executeUpdate() > 0) {
 				con.commit();
 				eliminado = true;
@@ -110,6 +126,24 @@ public class PersonaDaoImpl implements IPersona
 		
 		return personas;
 		
+	}
+
+
+	@Override
+	public boolean PersonaRegistrada(int DNI) {
+		boolean registrada=false;
+		PreparedStatement st;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		try {
+			st = conexion.prepareStatement(PersonaRegistrada);
+			st.setString(1, String.valueOf(DNI));
+			if(st.execute()) {
+				registrada=true;
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return registrada;
 	}
 
 }
