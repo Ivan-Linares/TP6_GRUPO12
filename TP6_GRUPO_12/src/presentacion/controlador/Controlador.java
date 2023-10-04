@@ -5,13 +5,18 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import com.sun.accessibility.internal.resources.accessibility;
 
 import entidad.Persona;
 import negocioImpl.PersonaNegocioImpl;
+import presentacion.vista.PanelAgregarPersonas;
+import presentacion.vista.PanelEliminarPersona;
+import presentacion.vista.PanelListaPersona;
+import presentacion.vista.PanelModificarPersona;
+import presentacion.vista.VentanaPrincipal;
 
 public class Controlador {
 	private VentanaPrincipal ventaprincipal;
+	private PanelAgregarPersonas panelAgregar;
 	private PersonaNegocioImpl Pnegocio;
 	private ArrayList<Persona> lista;
 	
@@ -21,15 +26,23 @@ public class Controlador {
 		this.ventaprincipal = ventap;
 		this.Pnegocio = pnegocio;
 		
-		this.ventaprincipal.getbtnAgregar().addActionListener(a->ventanaAgregarPersona(a));
-		this.ventaprincipal.getbtnModificar().addActionListener();
-		this.ventaprincipal.getbtnEliminar().addActionListener();
-		this.ventaprincipal.getbtnListar().addActionListener();
+		//VENTANA Principal
+		this.ventaprincipal.getMntmAgregar().addActionListener(a->EventoClickMenu_AbrirPanel_AgregarPersona(a));
+		this.ventaprincipal.getMntmModificar().addActionListener(b->EventoClickMenu_AbrirPanel_ModificarPersona(b));
+		this.ventaprincipal.getMntmEliminar().addActionListener(c->EventoClickMenu_AbrirPanel_EliminarPersona(c));
+		this.ventaprincipal.getMntmListar().addActionListener(d->EventoClickMenu_AbrirPanel_ListarPersona(d));
+		
+		//PANEL AGREGAR
+		this.panelAgregar.getBtnaceptar().addActionListener(a->EventoClick_AgregarPersona(a));
 	}
-	private void ventanaAgregarPersona(ActionEvent a) {
-		String Apellido=txtApellido.gettext();
-		String Nombre=txtNombre.gettext();
-		String DNI=txtdni.gettext();
+	
+	
+	private void EventoClick_AgregarPersona(ActionEvent a) {
+		
+		String Apellido=this.panelAgregar.getTxtapellido().getText();
+		String Nombre=this.panelAgregar.getTxtnombre().getText();
+		String DNI=this.panelAgregar.getTxtdni().getText();
+		
 		if(CamposCompletos(DNI, Apellido, Nombre)==true) {
 			if(!Pnegocio.PersonaRegistrada(Integer.parseInt(DNI))) {
 				Persona obj= new Persona();
@@ -52,5 +65,28 @@ public class Controlador {
 			return false;
 		}
 		return true;
+	}
+	
+	
+	
+	private Object EventoClickMenu_AbrirPanel_ListarPersona(ActionEvent d) {
+		PanelListaPersona nueva = new PanelListaPersona();
+		nueva.setVisible(true);
+		return null;
+	}
+	private Object EventoClickMenu_AbrirPanel_EliminarPersona(ActionEvent c) {
+		PanelEliminarPersona nueva = new PanelEliminarPersona();
+		nueva.setVisible(true);
+		return null;
+	}
+	private Object EventoClickMenu_AbrirPanel_ModificarPersona(ActionEvent b) {
+		PanelModificarPersona nueva= new PanelModificarPersona();
+		nueva.setVisible(true);
+		return null;
+	}
+	private Object EventoClickMenu_AbrirPanel_AgregarPersona(ActionEvent a) {
+		PanelAgregarPersonas nueva= new PanelAgregarPersonas();
+		nueva.setVisible(true);
+		return null;
 	}
 }
