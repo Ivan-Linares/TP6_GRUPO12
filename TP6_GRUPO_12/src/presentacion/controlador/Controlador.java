@@ -8,20 +8,21 @@ import javax.swing.JOptionPane;
 
 import entidad.Persona;
 import negocioImpl.PersonaNegocioImpl;
+import negocio.PersonaNegocio;
 import presentacion.vista.PanelAgregarPersonas;
 import presentacion.vista.PanelEliminarPersona;
-import presentacion.vista.PanelListaPersona;
+import presentacion.vista.PanelListarPersona;
 import presentacion.vista.PanelModificarPersona;
 import presentacion.vista.VentanaPrincipal;
 
 public class Controlador {
 	private VentanaPrincipal ventaprincipal;
 	private PanelAgregarPersonas panelAgregar;
-	private PersonaNegocioImpl Pnegocio;
+	private PersonaNegocio Pnegocio;
 	private ArrayList<Persona> lista;
 	
 	
-	public Controlador(VentanaPrincipal ventap, PersonaNegocioImpl pnegocio ) {
+	public Controlador(VentanaPrincipal ventap, PersonaNegocio pnegocio ) {
 		super();
 		this.ventaprincipal = ventap;
 		this.Pnegocio = pnegocio;
@@ -33,7 +34,8 @@ public class Controlador {
 		this.ventaprincipal.getMntmListar().addActionListener(d->EventoClickMenu_AbrirPanel_ListarPersona(d));
 		
 		//PANEL AGREGAR
-		this.panelAgregar.getBtnaceptar().addActionListener(a->EventoClick_AgregarPersona(a));
+		//TODO: SOLUCIONAR NULL POINTER
+		//this.panelAgregar.getBtnaceptar().addActionListener(a->EventoClick_AgregarPersona(a));
 	}
 
 	
@@ -71,7 +73,7 @@ public class Controlador {
 	
 	
 	private Object EventoClickMenu_AbrirPanel_ListarPersona(ActionEvent d) {
-		PanelListaPersona nueva = new PanelListaPersona();
+		PanelListarPersona nueva = new PanelListarPersona();
 		nueva.setVisible(true);
 		return null;
 	}
@@ -89,5 +91,10 @@ public class Controlador {
 		PanelAgregarPersonas nueva= new PanelAgregarPersonas();
 		nueva.setVisible(true);
 		return null;
+	}
+	
+	public void inicializar()
+	{
+		this.ventaprincipal.setVisible(true);
 	}
 }

@@ -9,5 +9,6 @@ public interface PersonaNegocio {
 	public boolean modificar(Persona persona);
 	public boolean eliminar(Persona persona);
 	public ArrayList<Persona>listar();
+	public boolean PersonaRegistrada(int id);
 	
 }
