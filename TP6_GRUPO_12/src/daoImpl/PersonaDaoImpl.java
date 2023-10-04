@@ -123,7 +123,6 @@ public class PersonaDaoImpl implements IPersona
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return personas;
 		
 	}
