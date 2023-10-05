@@ -7,7 +7,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import entidad.Persona;
-import negocioImpl.PersonaNegocioImpl;
 import negocio.PersonaNegocio;
 import presentacion.vista.PanelAgregarPersonas;
 import presentacion.vista.PanelEliminarPersona;
@@ -43,11 +42,12 @@ public class Controlador {
 		
 		//PANEL AGREGAR
 		this.panelAgregar.getBtnaceptar().addActionListener(a->EventoClick_AgregarPersona(a));
+		//PANEL ELIMINAR
+		this.panelEliminar.getBtnEliminar().addActionListener(a->EventoClick_ElimnarPersona(a));
 
 	}
 
-	
-	
+
 	private void EventoClick_AgregarPersona(ActionEvent a) {
 		
 		/*String Apellido=this.panelAgregar.getTxtapellido().getText();
@@ -97,34 +97,36 @@ public class Controlador {
 			boolean estado = Pnegocio.insertar(nPersona);
 			if(estado==true) {
 				mensaje = "Persona Agregada con exito";
-				this.panelAgregar.getTxtnombre().setText("");
-				this.panelAgregar.getTxtapellido().setText("");
-				this.panelAgregar.getTxtdni().setText("");
+				Borrartxt();
 				}
 			else {
 				mensaje = "Error al cargar Persona";
-				this.panelAgregar.getTxtnombre().setText("");
-				this.panelAgregar.getTxtapellido().setText("");
-				this.panelAgregar.getTxtdni().setText("");
+				Borrartxt();
 			};
 		}
 		else {
-			this.panelAgregar.getTxtnombre().setText("");
-			this.panelAgregar.getTxtapellido().setText("");
-			this.panelAgregar.getTxtdni().setText("");
+			Borrartxt();
 			mensaje = "El usuario ya existe";
 		}
 		
 		JOptionPane.showMessageDialog(null, mensaje);
 		
 	}
-	private boolean CamposCompletos(String dNI, String apellido, String nombre) {
+	private void Borrartxt() {
+		this.panelAgregar.getTxtnombre().setText("");
+		this.panelAgregar.getTxtapellido().setText("");
+		this.panelAgregar.getTxtdni().setText("");
+	}
+
+
+
+	/*private boolean CamposCompletos(String dNI, String apellido, String nombre) {
 		String vacio="";
 		if(dNI.equals(vacio) || apellido.equals(vacio) || nombre.equals(vacio)) {
 			return false;
 		}
 		return true;
-	}
+	}*/
 	
 	private Object EventoClickMenu_AbrirPanel_ListarPersona(ActionEvent d) {
 		
@@ -148,8 +150,48 @@ public class Controlador {
 		this.ventaprincipal.getContentPane().add(panelEliminar);
 		this.ventaprincipal.getContentPane().repaint();
 		this.ventaprincipal.getContentPane().revalidate();
+		
+		ArrayList<Persona> list = new ArrayList<Persona>(Pnegocio.listar());
+		DefaultTableModel model = new DefaultTableModel(new Object[] {"dni", "nombre", "apellido"}, 0);
+		
+		for (Persona persona : list) {
+			model.addRow(new Object[] {persona.getDNI(), persona.getNombre(), persona.getApellido()});
+		}
+		
+		this.panelEliminar.gettPersonas().setModel(model);
 		return null;
 	}
+	
+	
+	private void EventoClick_ElimnarPersona(ActionEvent a) {
+		
+		int fila=  panelEliminar.getRowstPersonas();
+		int col=0;
+		Persona obj=new Persona();
+		obj.setDNI(panelEliminar.getValueSelected(fila, col));
+		
+		if(Pnegocio.eliminar(obj)) {
+			JOptionPane.showMessageDialog(null, "La persona seleccionada fue eliminada.");
+		}
+		Actualizar();
+	}
+	
+	
+
+
+
+	private void Actualizar() {
+		ArrayList<Persona> list = new ArrayList<Persona>(Pnegocio.listar());
+		DefaultTableModel model = new DefaultTableModel(new Object[] {"dni", "nombre", "apellido"}, 0);
+		
+		for (Persona persona : list) {
+			model.addRow(new Object[] {persona.getDNI(), persona.getNombre(), persona.getApellido()});
+		}
+		
+		this.panelEliminar.gettPersonas().setModel(model);		
+	}
+
+
 	private Object EventoClickMenu_AbrirPanel_ModificarPersona(ActionEvent b) {
 		this.ventaprincipal.getContentPane().removeAll();
 		this.ventaprincipal.getContentPane().add(panelModificar);
