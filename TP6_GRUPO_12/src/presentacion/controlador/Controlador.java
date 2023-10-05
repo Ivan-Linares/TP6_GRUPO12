@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
 import com.mysql.cj.protocol.a.StringValueEncoder;
@@ -47,6 +48,9 @@ public class Controlador {
 		this.panelAgregar.getBtnaceptar().addActionListener(a->EventoClick_AgregarPersona(a));
 		//PANEL ELIMINAR
 		this.panelEliminar.getBtnEliminar().addActionListener(a->EventoClick_ElimnarPersona(a));
+		//PANEL MODIFICAR
+		this.panelModificar.getBtnModificar().addActionListener(a->EventoClick_ModificarPersona(a));
+		this.panelModificar.getListPersonas().addListSelectionListener(a->EventoClickLista_ModificarPersona(a));
 
 	}
 
@@ -148,6 +152,7 @@ public class Controlador {
 		this.panelListar.getTable().setModel(model);
 		return null;
 	}
+	
 	private Object EventoClickMenu_AbrirPanel_EliminarPersona(ActionEvent c) {
 		this.ventaprincipal.getContentPane().removeAll();
 		this.ventaprincipal.getContentPane().add(panelEliminar);
@@ -177,9 +182,6 @@ public class Controlador {
 	}
 	
 	
-
-
-
 	private void Actualizar() {
 		ArrayList<Persona> list = new ArrayList<Persona>(Pnegocio.listar());		
 		DefaultListModel<Persona> model = new DefaultListModel<Persona>();
@@ -188,15 +190,66 @@ public class Controlador {
 		}
 		this.panelEliminar.setModelList(model);	
 	}
-
+	
+	private void ActualizarModificar() {
+		ArrayList<Persona> list = new ArrayList<Persona>(Pnegocio.listar());		
+		DefaultListModel<Persona> model = new DefaultListModel<Persona>();
+		for(Persona persona : list) {
+			model.addElement(persona);
+		}
+		this.panelModificar.setModelList(model);	
+	}
 
 	private Object EventoClickMenu_AbrirPanel_ModificarPersona(ActionEvent b) {
 		this.ventaprincipal.getContentPane().removeAll();
 		this.ventaprincipal.getContentPane().add(panelModificar);
 		this.ventaprincipal.getContentPane().repaint();
 		this.ventaprincipal.getContentPane().revalidate();
+		
+		ArrayList<Persona> list = new ArrayList<Persona>(Pnegocio.listar());		
+		DefaultListModel<Persona> model = new DefaultListModel<Persona>();
+		for(Persona persona : list) {
+			model.addElement(persona);
+		}
+		this.panelModificar.setModelList(model);
+	
+		
+		/*
+		ArrayList<Persona> list = new ArrayList<Persona>(Pnegocio.listar());
+		DefaultTableModel model = new DefaultTableModel(new Object[] {"dni", "nombre", "apellido"}, 0);
+		
+		for (Persona persona : list) {
+			model.addRow(new Object[] {persona.getDNI(), persona.getNombre(), persona.getApellido()});
+		}
+		
+		this.panelModificar.getTable().setModel(model);
+		*/
+		
 		return null;
 	}
+	
+	private void EventoClickLista_ModificarPersona(ListSelectionEvent a) {
+		
+		panelModificar.setTxtDni(panelModificar.getDNI());
+		panelModificar.setTxtNombre(panelModificar.getNombre());
+		panelModificar.setTxtApellido(panelModificar.getApellido());
+		
+	}
+	
+	private void EventoClick_ModificarPersona(ActionEvent a) {
+		
+		Persona persona = new Persona();
+		persona.setDNI(panelModificar.getTxtDNI());
+		persona.setApellido(panelModificar.getTxtApellido());
+		persona.setNombre(panelModificar.getTxtNombre());
+		
+		if(Pnegocio.modificar(persona)) {
+			JOptionPane.showMessageDialog(null, "La persona seleccionada fue modificada.");
+		}
+		
+		ActualizarModificar();
+	}
+	
 	private Object EventoClickMenu_AbrirPanel_AgregarPersona(ActionEvent a) {
 		this.ventaprincipal.getContentPane().removeAll();
 		this.ventaprincipal.getContentPane().add(panelAgregar);

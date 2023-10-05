@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
 import javax.swing.JButton;
 import java.awt.FlowLayout;
 import javax.swing.SwingConstants;
@@ -47,6 +48,7 @@ public class PanelModificarPersona extends JPanel {
 		txtApellido.setColumns(10);
 		
 		txtDni = new JTextField();
+		txtDni.setEditable(false);
 		panel.add(txtDni);
 		txtDni.setColumns(10);
 		
@@ -54,5 +56,56 @@ public class PanelModificarPersona extends JPanel {
 		panel.add(btnModificar);
 
 	}
-
+	
+	public void setModelList(ListModel<Persona> model) {
+		this.listPersonas.setModel(model);
+	}
+	
+	public JButton getBtnModificar() {
+		return btnModificar;
+	}
+	
+	public JList<Persona> getListPersonas() {
+		return listPersonas;
+	}
+	
+	public void setTxtDni(String txtDni) {
+		this.txtDni.setText(txtDni);
+	}
+	
+	public String getDNI() {
+		return listPersonas.getSelectedValue().getDNI();
+	}
+	
+	public void setTxtNombre(String txtNombre) {
+		this.txtNombre.setText(txtNombre);
+	}
+	
+	public String getNombre() {
+		return listPersonas.getSelectedValue().getNombre();
+	}
+	
+	public void setTxtApellido(String txtApellido) {
+		this.txtApellido.setText(txtApellido);
+	}
+	
+	public String getApellido() {
+		return listPersonas.getSelectedValue().getApellido();
+	}
+	
+	public String getTxtDNI() {
+		return txtDni.getText();
+	}
+	
+	public String getTxtNombre() {
+		return txtNombre.getText();
+	}
+	
+	public String getTxtApellido() {
+		return txtApellido.getText();
+	}
+	
+	
+	
+	
 }
