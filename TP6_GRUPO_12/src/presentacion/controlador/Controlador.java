@@ -25,7 +25,7 @@ public class Controlador {
 	private ArrayList<Persona> lista;
 	
 	
-	public Controlador(VentanaPrincipal ventap, PersonaNegocio pnegocio ) {
+	public Controlador(VentanaPrincipal ventap, PersonaNegocio pnegocio) {
 		super();
 		this.ventaprincipal = ventap;
 		this.Pnegocio = pnegocio;
@@ -75,6 +75,7 @@ public class Controlador {
 		String nombre = this.panelAgregar.getTxtnombre().getText();
 		String apellido = this.panelAgregar.getTxtapellido().getText();
 		String dni = this.panelAgregar.getTxtdni().getText();
+		
 		if(nombre.trim().isEmpty() 	 || 
 		   apellido.trim().isEmpty() ||
 		   dni.trim().isEmpty()) {
@@ -131,11 +132,14 @@ public class Controlador {
 		this.ventaprincipal.getContentPane().add(panelListar);
 		this.ventaprincipal.getContentPane().repaint();
 		this.ventaprincipal.getContentPane().revalidate();
+		
 		ArrayList<Persona> list = new ArrayList<Persona>(Pnegocio.listar());
 		DefaultTableModel model = new DefaultTableModel(new Object[] {"dni", "nombre", "apellido"}, 0);
+		
 		for (Persona persona : list) {
 			model.addRow(new Object[] {persona.getDNI(), persona.getNombre(), persona.getApellido()});
 		}
+		
 		this.panelListar.getTable().setModel(model);
 		return null;
 	}

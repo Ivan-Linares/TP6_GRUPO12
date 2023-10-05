@@ -9,9 +9,6 @@ import java.awt.event.KeyEvent;
 
 public class PanelAgregarPersonas extends JPanel {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField txtnombre;
 	private JTextField txtapellido;
@@ -41,7 +38,7 @@ public class PanelAgregarPersonas extends JPanel {
 		txtnombre.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if(!Character.isDigit(e.getKeyChar())) {
+				if(Character.isDigit(e.getKeyChar())) {
 					e.consume();
 				}
 			}

@@ -3,19 +3,16 @@ package presentacion.vista;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import java.awt.BorderLayout;
 
 public class PanelListarPersona extends JPanel {
 
 	private JTable table;
 
-	/**
-	 * Create the panel.
-	 */
 	public PanelListarPersona() {
-		setLayout(null);
+		setLayout(new BorderLayout(0, 0));
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(49, 37, 467, 222);
 		add(scrollPane);
 		
 		table = new JTable();
