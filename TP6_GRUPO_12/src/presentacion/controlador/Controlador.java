@@ -43,7 +43,7 @@ public class Controlador {
 		
 		//PANEL AGREGAR
 		//TODO: SOLUCIONAR NULL POINTER
-		//this.panelAgregar.getBtnaceptar().addActionListener(a->EventoClick_AgregarPersona(a));
+		this.panelAgregar.getBtnaceptar().addActionListener(a->EventoClick_AgregarPersona(a));
 
 	}
 
@@ -51,10 +51,10 @@ public class Controlador {
 	
 	private void EventoClick_AgregarPersona(ActionEvent a) {
 		
-		String Apellido=this.panelAgregar.getTxtapellido().getText();
+		/*String Apellido=this.panelAgregar.getTxtapellido().getText();
 		String Nombre=this.panelAgregar.getTxtnombre().getText();
 		String DNI=this.panelAgregar.getTxtdni().getText();
-		
+
 		if(CamposCompletos(DNI, Apellido, Nombre)==true) {
 			if(!Pnegocio.PersonaRegistrada(Integer.parseInt(DNI))) {
 				Persona obj= new Persona();
@@ -69,7 +69,56 @@ public class Controlador {
 		}
 		else {
 			JOptionPane.showMessageDialog(null, "Es necesario completar todos los campos. ");
+		}*/
+		
+		//GERMAN: REVISAR, el insert funciona pero tira error. Revisar el metodo listar
+		
+		String mensaje;
+		boolean existe = false;
+		String nombre = this.panelAgregar.getTxtnombre().getText();
+		String apellido = this.panelAgregar.getTxtapellido().getText();
+		String dni = this.panelAgregar.getTxtdni().getText();
+		if(nombre.trim().isEmpty() 	 || 
+		   apellido.trim().isEmpty() ||
+		   dni.trim().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Es necesario completar todos los campos");
+			return;
 		}
+		
+		/* Guarda los datos de los textbox en una instancia de Persona, trae todos los datos de la base y los compara para ver si existe */
+		Persona nPersona = new Persona(dni, nombre, apellido);
+		ArrayList<Persona> list = new ArrayList<Persona>(Pnegocio.listar());
+		for(Persona auxPersona : list) {
+			if(auxPersona.getDNI().equals(nPersona.getDNI())) {
+				existe = true;
+			}
+		}
+		
+		if(!existe) {
+			/* Sigue en caso de que no exista */
+			boolean estado = Pnegocio.insertar(nPersona);
+			if(estado==true) {
+				mensaje = "Persona Agregada con exito";
+				this.panelAgregar.getTxtnombre().setText("");
+				this.panelAgregar.getTxtapellido().setText("");
+				this.panelAgregar.getTxtdni().setText("");
+				}
+			else {
+				mensaje = "Error al cargar Persona";
+				this.panelAgregar.getTxtnombre().setText("");
+				this.panelAgregar.getTxtapellido().setText("");
+				this.panelAgregar.getTxtdni().setText("");
+			};
+		}
+		else {
+			this.panelAgregar.getTxtnombre().setText("");
+			this.panelAgregar.getTxtapellido().setText("");
+			this.panelAgregar.getTxtdni().setText("");
+			mensaje = "El usuario ya existe";
+		}
+		
+		JOptionPane.showMessageDialog(null, mensaje);
+		
 	}
 	private boolean CamposCompletos(String dNI, String apellido, String nombre) {
 		String vacio="";
