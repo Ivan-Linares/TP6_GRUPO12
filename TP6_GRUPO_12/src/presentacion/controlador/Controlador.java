@@ -3,8 +3,11 @@ package presentacion.controlador;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
+import com.mysql.cj.protocol.a.StringValueEncoder;
 
 import entidad.Persona;
 import negocio.PersonaNegocio;
@@ -151,24 +154,21 @@ public class Controlador {
 		this.ventaprincipal.getContentPane().repaint();
 		this.ventaprincipal.getContentPane().revalidate();
 		
-		ArrayList<Persona> list = new ArrayList<Persona>(Pnegocio.listar());
-		DefaultTableModel model = new DefaultTableModel(new Object[] {"dni", "nombre", "apellido"}, 0);
-		
-		for (Persona persona : list) {
-			model.addRow(new Object[] {persona.getDNI(), persona.getNombre(), persona.getApellido()});
+		ArrayList<Persona> list = new ArrayList<Persona>(Pnegocio.listar());		
+		DefaultListModel<Persona> model = new DefaultListModel<Persona>();
+		for(Persona persona : list) {
+			model.addElement(persona);
 		}
+		this.panelEliminar.setModelList(model);
 		
-		this.panelEliminar.gettPersonas().setModel(model);
 		return null;
 	}
 	
 	
 	private void EventoClick_ElimnarPersona(ActionEvent a) {
 		
-		int fila=  panelEliminar.getRowstPersonas();
-		int col=0;
 		Persona obj=new Persona();
-		obj.setDNI(panelEliminar.getValueSelected(fila, col));
+		obj.setDNI(panelEliminar.getValueSelected());
 		
 		if(Pnegocio.eliminar(obj)) {
 			JOptionPane.showMessageDialog(null, "La persona seleccionada fue eliminada.");
@@ -181,14 +181,12 @@ public class Controlador {
 
 
 	private void Actualizar() {
-		ArrayList<Persona> list = new ArrayList<Persona>(Pnegocio.listar());
-		DefaultTableModel model = new DefaultTableModel(new Object[] {"dni", "nombre", "apellido"}, 0);
-		
-		for (Persona persona : list) {
-			model.addRow(new Object[] {persona.getDNI(), persona.getNombre(), persona.getApellido()});
+		ArrayList<Persona> list = new ArrayList<Persona>(Pnegocio.listar());		
+		DefaultListModel<Persona> model = new DefaultListModel<Persona>();
+		for(Persona persona : list) {
+			model.addElement(persona);
 		}
-		
-		this.panelEliminar.gettPersonas().setModel(model);		
+		this.panelEliminar.setModelList(model);	
 	}
 
 

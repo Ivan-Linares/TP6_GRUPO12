@@ -25,7 +25,7 @@ public class PanelEliminarPersona extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JButton btnEliminar;
-	private JTable tPersonas;
+	private JList<Persona> list;
 
 	
 	
@@ -41,29 +41,22 @@ public class PanelEliminarPersona extends JPanel {
 		btnEliminar.setBounds(0, 277, 450, 23);
 		add(btnEliminar);
 		
-		tPersonas = new JTable();
-		tPersonas.setBounds(10, 25, 440, 250);
-		add(tPersonas);
+		list = new JList<Persona>();
+		list.setBounds(22, 25, 407, 187);
+		add(list);
 
 	}
 	
+
+	public String getValueSelected() {
+		return list.getSelectedValue().getDNI();
+	}
+
+
+	public void setModelList(ListModel<Persona> model) {
+		this.list.setModel(model);
+	}
 	
-	public JTable gettPersonas() {
-		return tPersonas;
-	}
-	public int getRowstPersonas() {
-		return tPersonas.getSelectedRow();
-	}
-
-	public String getValueSelected(int fila, int col) {
-		return (String) tPersonas.getValueAt(fila, col);
-	}
-
-	public void settPersonas(JTable tPersonas) {
-		this.tPersonas = tPersonas;
-	}
-
-
 	public JButton getBtnEliminar() {
 		return btnEliminar;
 	}
