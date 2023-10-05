@@ -1,11 +1,14 @@
 package daoImpl;
 
-import java.beans.Statement;
+//import java.beans.Statement;
+import java.sql.Statement;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 
 import dao.IPersona;
 import entidad.Persona;
@@ -111,8 +114,8 @@ public class PersonaDaoImpl implements IPersona
 		Connection con = Conexion.getConexion().getSQLConexion();
 		
 		try {
-			Statement st = (Statement) con.createStatement();
-			ResultSet rs = ((java.sql.Statement) st).executeQuery(listar);
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(listar);
 			while(rs.next()) {
 				Persona persona = new Persona();
 				persona.setDNI(rs.getString("dni"));

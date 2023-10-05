@@ -42,7 +42,6 @@ public class Controlador {
 		this.ventaprincipal.getMntmListar().addActionListener(d->EventoClickMenu_AbrirPanel_ListarPersona(d));
 		
 		//PANEL AGREGAR
-		//TODO: SOLUCIONAR NULL POINTER
 		this.panelAgregar.getBtnaceptar().addActionListener(a->EventoClick_AgregarPersona(a));
 
 	}
@@ -70,8 +69,6 @@ public class Controlador {
 		else {
 			JOptionPane.showMessageDialog(null, "Es necesario completar todos los campos. ");
 		}*/
-		
-		//GERMAN: REVISAR, el insert funciona pero tira error. Revisar el metodo listar
 		
 		String mensaje;
 		boolean existe = false;
@@ -129,8 +126,6 @@ public class Controlador {
 	}
 	
 	private Object EventoClickMenu_AbrirPanel_ListarPersona(ActionEvent d) {
-		
-		//GERMAN: REVISAR. Error con los tipos de dato.
 		
 		this.ventaprincipal.getContentPane().removeAll();
 		this.ventaprincipal.getContentPane().add(panelListar);
