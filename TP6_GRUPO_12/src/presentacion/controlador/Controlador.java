@@ -16,9 +16,12 @@ import presentacion.vista.PanelModificarPersona;
 import presentacion.vista.VentanaPrincipal;
 
 public class Controlador {
+	private PersonaNegocio Pnegocio;
 	private VentanaPrincipal ventaprincipal;
 	private PanelAgregarPersonas panelAgregar;
-	private PersonaNegocio Pnegocio;
+	private PanelModificarPersona panelModificar;
+	private PanelEliminarPersona panelEliminar;
+	private PanelListarPersona panelListar;
 	private ArrayList<Persona> lista;
 	
 	
@@ -26,6 +29,11 @@ public class Controlador {
 		super();
 		this.ventaprincipal = ventap;
 		this.Pnegocio = pnegocio;
+		
+		this.panelAgregar = new PanelAgregarPersonas();
+		this.panelModificar = new PanelModificarPersona();
+		this.panelEliminar = new PanelEliminarPersona();
+		this.panelListar = new PanelListarPersona();
 		
 		//VENTANA Principal
 		this.ventaprincipal.getMntmAgregar().addActionListener(a->EventoClickMenu_AbrirPanel_AgregarPersona(a));
@@ -36,6 +44,7 @@ public class Controlador {
 		//PANEL AGREGAR
 		//TODO: SOLUCIONAR NULL POINTER
 		//this.panelAgregar.getBtnaceptar().addActionListener(a->EventoClick_AgregarPersona(a));
+
 	}
 
 	
@@ -73,23 +82,31 @@ public class Controlador {
 	
 	
 	private Object EventoClickMenu_AbrirPanel_ListarPersona(ActionEvent d) {
-		PanelListarPersona nueva = new PanelListarPersona();
-		nueva.setVisible(true);
+		this.ventaprincipal.getContentPane().removeAll();
+		this.ventaprincipal.getContentPane().add(panelListar);
+		this.ventaprincipal.getContentPane().repaint();
+		this.ventaprincipal.getContentPane().revalidate();
 		return null;
 	}
 	private Object EventoClickMenu_AbrirPanel_EliminarPersona(ActionEvent c) {
-		PanelEliminarPersona nueva = new PanelEliminarPersona();
-		nueva.setVisible(true);
+		this.ventaprincipal.getContentPane().removeAll();
+		this.ventaprincipal.getContentPane().add(panelEliminar);
+		this.ventaprincipal.getContentPane().repaint();
+		this.ventaprincipal.getContentPane().revalidate();
 		return null;
 	}
 	private Object EventoClickMenu_AbrirPanel_ModificarPersona(ActionEvent b) {
-		PanelModificarPersona nueva= new PanelModificarPersona();
-		nueva.setVisible(true);
+		this.ventaprincipal.getContentPane().removeAll();
+		this.ventaprincipal.getContentPane().add(panelModificar);
+		this.ventaprincipal.getContentPane().repaint();
+		this.ventaprincipal.getContentPane().revalidate();
 		return null;
 	}
 	private Object EventoClickMenu_AbrirPanel_AgregarPersona(ActionEvent a) {
-		PanelAgregarPersonas nueva= new PanelAgregarPersonas();
-		nueva.setVisible(true);
+		this.ventaprincipal.getContentPane().removeAll();
+		this.ventaprincipal.getContentPane().add(panelAgregar);
+		this.ventaprincipal.getContentPane().repaint();
+		this.ventaprincipal.getContentPane().revalidate();
 		return null;
 	}
 	
