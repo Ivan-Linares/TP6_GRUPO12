@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
-
+import javax.swing.table.DefaultTableModel;
 
 import entidad.Persona;
 import negocioImpl.PersonaNegocioImpl;
@@ -128,13 +128,20 @@ public class Controlador {
 		return true;
 	}
 	
-	
-	
 	private Object EventoClickMenu_AbrirPanel_ListarPersona(ActionEvent d) {
+		
+		//GERMAN: REVISAR. Error con los tipos de dato.
+		
 		this.ventaprincipal.getContentPane().removeAll();
 		this.ventaprincipal.getContentPane().add(panelListar);
 		this.ventaprincipal.getContentPane().repaint();
 		this.ventaprincipal.getContentPane().revalidate();
+		ArrayList<Persona> list = new ArrayList<Persona>(Pnegocio.listar());
+		DefaultTableModel model = new DefaultTableModel(new Object[] {"dni", "nombre", "apellido"}, 0);
+		for (Persona persona : list) {
+			model.addRow(new Object[] {persona.getDNI(), persona.getNombre(), persona.getApellido()});
+		}
+		this.panelListar.getTable().setModel(model);
 		return null;
 	}
 	private Object EventoClickMenu_AbrirPanel_EliminarPersona(ActionEvent c) {
