@@ -74,7 +74,10 @@ public class PanelModificarPersona extends JPanel {
 	}
 	
 	public String getDNI() {
-		return listPersonas.getSelectedValue().getDNI();
+		if (!listPersonas.isSelectionEmpty()){
+			return listPersonas.getSelectedValue().getDNI();
+		}
+		else return "";
 	}
 	
 	public void setTxtNombre(String txtNombre) {
@@ -82,7 +85,10 @@ public class PanelModificarPersona extends JPanel {
 	}
 	
 	public String getNombre() {
-		return listPersonas.getSelectedValue().getNombre();
+		if (!listPersonas.isSelectionEmpty()) {
+			return listPersonas.getSelectedValue().getNombre();
+		}
+		else return "";
 	}
 	
 	public void setTxtApellido(String txtApellido) {
@@ -90,7 +96,10 @@ public class PanelModificarPersona extends JPanel {
 	}
 	
 	public String getApellido() {
-		return listPersonas.getSelectedValue().getApellido();
+		if (!listPersonas.isSelectionEmpty()) {
+			return listPersonas.getSelectedValue().getApellido();
+		}
+		else return "";
 	}
 	
 	public String getTxtDNI() {
